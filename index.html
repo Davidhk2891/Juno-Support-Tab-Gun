@@ -5,17 +5,38 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Support tab gun</title>
+
+        <!--css-->
+        <link rel="stylesheet" type="text/css" href="supportgun.css">
         <!--Latest complied and minified CSS Bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
-    <body>
+    <body id="body" onload="fetchGuns()">
         <div class="container">
             <h2>Support tab gun</h2>
+            <br>
             <div class="jumbotron">
-                <h3>Load your gun tabs</h3>
+                <h3>Gun set up</h3>
+                <br>
                 <form id="tabsInputForm">
+                    <div class ="form-group">
+                        <label for="gunOwner">Gun owner</label>
+                        <input type="text" class="form-control" id="gunOwner" placeholder="Your name here">
+                    </div>
+                    <div class ="form-group">
+                        <label for="gunDesc">Gun description</label>
+                        <input type="text" class="form-control" id="gunDesc" placeholder="What does this gun do...">
+                    </div>
                     <div class="form-group">
-                        <label for="numberOfTabs"></label>
+                        <label for="numOfGuns">Number of guns</label>
+                        <select id="numOfGuns" class="form-control">
+                            <option value="oneGun">1</option>
+                            <option value="twoGun">2</option>
+                            <option value="threeGun">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="numberOfTabs">Number of tabs</label>
                         <select id="numberOfTabs" class="form-control" onchange="selectedNumOfTabsFunc(this);">
                             <option value="one">1</option>
                             <option value="two">2</option>
@@ -35,7 +56,16 @@
                         </select>
                     </div>
                     <div id="generatedTabs"></div>
+                    <button type="submit" class="btn btn-primary">Create & load gun</button>
                 </form>
+            </div>
+            <br>
+            <div class="col-lg-12">
+                <div id="gunList">
+                </div>
+            </div>
+            <div class="footer">
+                <p>&copy davidhk28workshop</p>
             </div>
         </div>
         <!--chance.js library for generating random single string identifiers-->
