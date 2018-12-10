@@ -15,7 +15,7 @@
         <div class="container">
             <h2>Support tab gun</h2>
             <br>
-            <div class="jumbotron">
+            <div class="jumbotron" id="jumbo">
                 <h3>Gun set up</h3>
                 <br>
                 <form id="tabsInputForm">
@@ -29,34 +29,15 @@
                     </div>
                     <div class="form-group">
                         <label for="numOfGuns">Number of guns</label>
-                        <select id="numOfGuns" class="form-control">
+                        <select id="numOfGuns" class="form-control" onchange="selectedNumOfGunsFunc(this)">
                             <option value="oneGun">1</option>
                             <option value="twoGun">2</option>
-                            <option value="threeGun">3</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="numberOfTabs">Number of tabs</label>
-                        <select id="numberOfTabs" class="form-control" onchange="selectedNumOfTabsFunc(this);">
-                            <option value="one">1</option>
-                            <option value="two">2</option>
-                            <option value="three">3</option>
-                            <option value="four">4</option>
-                            <option value="five">5</option>
-                            <option value="six">6</option>
-                            <option value="seven">7</option>
-                            <option value="eight">8</option>
-                            <option value="nine">9</option>
-                            <option value="ten">10</option>
-                            <option value="eleven">11</option>
-                            <option value="twelve">12</option>
-                            <option value="thirteen">13</option>
-                            <option value="fourteen">14</option>
-                            <option value="fifteen">15</option>
-                        </select>
+                    <div class="row" id="gunsRow">
                     </div>
-                    <div id="generatedTabs"></div>
-                    <button type="submit" class="btn btn-primary">Create & load gun</button>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="display: block; margin-left: auto; margin-right: auto;">Create & load gun</button>
                 </form>
             </div>
             <br>

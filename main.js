@@ -3,78 +3,168 @@ document.getElementById("tabsInputForm").addEventListener("submit", saveGun);
 var tabsList;
 var selectedNumOfTabs;
 
-var childTab;
-var tabLabel;
-var tabInput;
+var childTab = "";
+var childTab2 = "";
+var tabLabel = "";
+var tabLabel2 = "";
+var tabInput = "";
+var tabInput2 = "";
 
-var tabNumInt
-var prevTabsNum;
+var tabNumInt1, tabNumInt2, tabNumIntFinal1, tabNumIntFinal2;
+var prevTabsNum1, prevTabsNum2;
 
-var selecTabsArr;
+var selecTabsArr, selecTabsArr2;
 
-var numOfGuns;
+var gunsList;
+var selectedNumOfGuns;
+var gunNumInt;
+var prevGunNum;
+var childGun;
+var gunLabel;
+var gunSelect;
+var gunOption;
+var generatedTabs;
 
 function selectedNumOfGunsFunc(sel){
-
-    numOfGuns = document.getElementById("numOfGuns");
-    
-
-}
-
-function selectedNumOfTabsFunc(sel){
-
-    console.log(childTab);
-    console.log(tabLabel);
-    console.log(tabInput);
-
-    dynamicTabsReset();
-
-    tabsList = document.getElementById("numberOfTabs");
-    selectedNumOfTabs = tabsList.options[tabsList.selectedIndex].text;
-    console.log("current tabs num " + selectedNumOfTabs);
-    tabNumInt = parseInt(selectedNumOfTabs);
-    for (var i = 1; i < tabNumInt + 1; i++){
-        
-        console.log(i);
-        
-        /* //--guide--//
-        <div class="form-group">
-        <label for="issueDescInput">Description</label>
-        <input type="text" class="form-control" id="issueDescInput" placeholder="Describe the ticket...">
-        </div>
-        */ //--guide--//
-
-        //tab input div
-        childTab = document.createElement("div");
-        childTab.setAttribute("id", "tabdiv" + i.toString());
-        childTab.setAttribute("class", "form-group");
-        document.getElementById("generatedTabs").appendChild(childTab);
-
-        //tab label
-        tabLabel = document.createElement("label");
-        tabLabel.setAttribute("id", "tablabel" + i.toString());
-        tabLabel.setAttribute("for", "tabAddressInput" + i.toString());
-        tabLabel.innerHTML = "tab " + i.toString();
-        childTab.appendChild(tabLabel);
-
-        //tab input
-        tabInput = document.createElement("input");
-        tabInput.setAttribute("type", "text");
-        tabInput.setAttribute("class", "form-control");
-        tabInput.setAttribute("id", "tabAddressInput" + i.toString());
-        tabInput.setAttribute("placeholder", "Enter URL " + i.toString());
-        childTab.appendChild(tabInput);
+    dynamicGunsReset();
+    var one = 1;
+    var two = 2;
+    prevTabsNum1 = 0;
+    prevTabsNum2 = 0;
+    gunsList = document.getElementById("numOfGuns");
+    selectedNumOfGuns = gunsList.options[gunsList.selectedIndex].text;
+    console.log("current guns num " + selectedNumOfGuns);
+    gunNumInt = parseInt(selectedNumOfGuns);
+    if (gunNumInt == one){
+        dynamicGunOps(one, "selectedNumOfTabsFunc("+one.toString()+");");
+    }else{
+        dynamicGunOps(one, "selectedNumOfTabsFunc("+one.toString()+");");
+        dynamicGunOps(two, "selectedNumOfTabsFunc("+two.toString()+");");
     }
-    prevTabsNum = tabNumInt;
+    prevGunNum = gunNumInt;
+    console.log("prevTab1 " + prevTabsNum1);
+    console.log("prevTab2 " + prevTabsNum2);
 }
 
-function dynamicTabsReset(){
+function dynamicGunsReset(){
+    if (!(childGun == null) && !(gunLabel == null) && !(gunSelect == null)){
+        console.log("already ran with guns num " + prevGunNum);
+        for(var i = 1; i < prevGunNum + 1; i++){
+            removeElement("gundiv" + i.toString());
+        }
+    }
+}
+
+function selectedNumOfTabsFunc(tabNum){
+    if (tabNum == 1){
+        console.log("tabNum is " + tabNum.toString());
+        tabsList = document.getElementById("numberOfTabs" + tabNum.toString());
+        selectedNumOfTabs = tabsList.options[tabsList.selectedIndex].text;
+        console.log("current tabs num " + selectedNumOfTabs);
+        tabNumInt1 = parseInt(selectedNumOfTabs);
+
+        console.log("tabNum running in  " + tabNum.toString());
+        dynamicTabsReset(childTab, tabLabel, tabInput, prevTabsNum1, "One");
+        for (var i = 1; i < tabNumInt1 + 1; i++){
+            dynamicTabSpawner(childTab, tabLabel, tabInput, i, tabNum, "One", "One");
+        }
+        console.log("tabNumInt 1 is " + tabNumInt1);
+        tabNumIntFinal1 = tabNumInt1;
+        console.log("tabNumInt 1.1 is " + tabNumIntFinal1);
+        prevTabsNum1 = tabNumIntFinal1;
+    }else{
+        console.log("tabNum is " + tabNum.toString());
+        tabsList = document.getElementById("numberOfTabs" + tabNum.toString());
+        selectedNumOfTabs = tabsList.options[tabsList.selectedIndex].text;
+        console.log("current tabs num " + selectedNumOfTabs);
+        tabNumInt2 = parseInt(selectedNumOfTabs);
+
+        console.log("tabNum running in  " + tabNum.toString());
+        dynamicTabsReset(childTab2, tabLabel2, tabInput2, prevTabsNum2, "Two");
+        for (var j = 1; j < tabNumInt2 + 1; j++){
+            dynamicTabSpawner(childTab2, tabLabel2, tabInput2, j, tabNum, "Two" , "Two");
+        }
+        console.log("tabNumInt 2 is " + tabNumInt2);
+        tabNumIntFinal2 = tabNumInt2;
+        console.log("tabNumInt 2.1 is " + tabNumIntFinal2);
+        prevTabsNum2 = tabNumIntFinal2;
+    }
+    console.log("prevTab1 " + prevTabsNum1);
+    console.log("prevTab2 " + prevTabsNum2);
+}
+
+function dynamicTabSpawner(childTabNum, tabLabelNum, tabInputNum, k, tabNum, addressInputSufix, tabdivSufix){
+    //tab input div
+    var iterator = k;
+    childTabNum = document.createElement("div");
+    childTabNum.setAttribute("id", "tabdiv" + tabdivSufix + iterator.toString());
+    childTabNum.setAttribute("class", "control-group");
+    console.log("x>>>>>" + childTabNum.id);
+    document.getElementById("generatedTabs"+tabNum.toString()).appendChild(childTabNum);
+    //tab label
+    tabLabelNum = document.createElement("label");
+    tabLabelNum.setAttribute("id", "tablabel" + iterator.toString());
+    tabLabelNum.setAttribute("for", "tabAddressInput" + addressInputSufix + iterator.toString());
+    tabLabelNum.innerHTML = "tab " + iterator.toString();
+    childTabNum.appendChild(tabLabelNum);
+    //tab input
+    tabInputNum = document.createElement("input");
+    tabInputNum.setAttribute("type", "text");
+    tabInputNum.setAttribute("class", "form-control");
+    tabInputNum.setAttribute("id", "tabAddressInput" + addressInputSufix + iterator.toString());
+    tabInputNum.setAttribute("placeholder", "Enter URL " + iterator.toString());
+    childTabNum.appendChild(tabInputNum);
+}
+
+function dynamicTabsReset(childTab, tabLabel, tabInput, prevTabsNum, tabdivSufix){
     if (!(childTab == null) && !(tabLabel == null) && !(tabInput == null)){
         console.log("already ran with tabs num " + prevTabsNum);
         for(var i = 1; i < prevTabsNum + 1; i++){
-            removeElement("tabdiv" + i.toString());
+            removeElement("tabdiv" + tabdivSufix + i.toString());
         }
     }
+}
+
+function dynamicGunOps(gunNumber, selectFunction){
+    //gun input div
+    childGun = document.createElement("span");
+    childGun.setAttribute("id", "gundiv" + gunNumber.toString());
+    childGun.setAttribute("class", "form-group col-xs-6");
+    childGun.setAttribute("style", "border: 2px solid grey; border-radius: 5px; padding: 12px; width: 48%; margin: 0px 8px 3px;");
+    document.getElementById("gunsRow").appendChild(childGun);
+
+    //gun label
+    gunLabel = document.createElement("label");
+    gunLabel.setAttribute("id", "gunlabel" + gunNumber.toString());
+    gunLabel.setAttribute("for", "numberOfTabs" + gunNumber.toString());
+    gunLabel.innerHTML = "Gun " + gunNumber.toString();
+    childGun.appendChild(gunLabel);
+
+    console.log("gunNumber is "+gunNumber.toString());
+    //gun select
+    gunSelect = document.createElement("select");
+    gunSelect.setAttribute("class", "form-control");
+    gunSelect.setAttribute("id", "numberOfTabs" + gunNumber.toString());
+    gunSelect.setAttribute("onchange", selectFunction);
+    childGun.appendChild(gunSelect);
+
+    //gun option
+    for(var j = 1; j <= 15; j++){
+        gunOption = document.createElement("option");
+        gunOption.setAttribute("value", j.toString());
+        gunOption.innerHTML = j.toString();
+        gunSelect.appendChild(gunOption);
+    }
+   
+    //vertical break
+    var vertBreak = document.createElement("br");
+    childGun.appendChild(vertBreak);
+    
+
+    //generated tabs
+    generatedTabs = document.createElement("div");
+    generatedTabs.setAttribute("id", "generatedTabs" + gunNumber.toString());
+    childGun.appendChild(generatedTabs)
 }
 
 function saveGun(e){
@@ -82,21 +172,31 @@ function saveGun(e){
     var gunId = chance.guid();//gun Id
     var savedGunDesc = document.getElementById("gunDesc").value;
     var gunOwner = document.getElementById("gunOwner").value;
+    var numOfGuns = gunNumInt;
 
-    selecTabsArr = [];//selected tabs
-    for(var i = 1; i < tabNumInt + 1; i++){
-        selecTabsArr.push(document.getElementById("tabAddressInput" + i.toString()).value);
+    //selected tabs
+    selecTabsArr = [];
+    selecTabsArr2 = [];
+    for(var i = 1; i < tabNumIntFinal1 + 1; i++){
+        selecTabsArr.push(document.getElementById("tabAddressInputOne" + i.toString()).value);
     }
-    console.log(selecTabsArr);
+    console.log("tabs for gun 1 are " + selecTabsArr);
+    if(numOfGuns == 2){
+        for(var i = 1; i < tabNumIntFinal2 + 1; i++){
+            selecTabsArr2.push(document.getElementById("tabAddressInputTwo" + i.toString()).value);
+        }
+    }
+    console.log("tabs for gun 2 are " + selecTabsArr2);
 
     var gunObj = {
         gunIds: gunId,
         gunOwners: gunOwner,
         gunDescriptions: savedGunDesc,
-        gunTabs: selecTabsArr
+        gunTabs: selecTabsArr,
+        gunTabs2: selecTabsArr2
     }
 
-    //local storage//
+    //saving to local storage//
     if(localStorage.getItem("guns") == null){
         var gunsArr = [];
         gunsArr.push(gunObj);
@@ -108,7 +208,8 @@ function saveGun(e){
     }
 
     document.getElementById("tabsInputForm").reset();
-    dynamicTabsReset();
+    dynamicTabsReset(childTab, tabLabel, tabInput, prevTabsNum1, "One");
+    dynamicTabsReset(childTab2, tabLabel2, tabInput2, prevTabsNum2, "Two");
 
     fetchGuns();
 
@@ -128,6 +229,8 @@ function fetchGuns(){
     var guns = JSON.parse(localStorage.getItem("guns"));
     var gunList = document.getElementById("gunList");
 
+    selectedNumOfGunsFunc(this);
+
     gunList.innerHTML = "";
 
     for(var i = 0; i < guns.length; i++){
@@ -135,24 +238,43 @@ function fetchGuns(){
         var owner = guns[i].gunOwners;
         var desc = guns[i].gunDescriptions;
         var tabs = guns[i].gunTabs;
+        var secondTabs = guns[i].gunTabs2;
 
-        gunList.innerHTML += '<div class="well">'+
-                                '<h6> Gun Id: ' + id + '</h6>'+
-                                '<h3>' + desc + '</h6>'+
-                                '<p><span class="glyphicon glyphicon-user"></span> ' + owner + '</p>'+
-                                '<p><span class="badge badge-secondary">' + tabs.join(" | ") + '</span></p>'+
-                                '<button type="button" onClick="fireGun(\''+id+'\')" class="btn btn-danger">Fire</button>'+ " " +
-                                '<button type="button" onClick="deleteGun(\''+id+'\')" class="btn btn-light">Delete</button>'+
-                            '</div>';   
-
-
+        if (guns[i].gunTabs2.length > 0){
+            gunList.innerHTML += '<div class="well">'+
+                                    '<span id="spanWrapper" style="display: flex;">'+
+                                        '<h6> Gun Id: ' + id + '</h6>'+
+                                        '<button type="button" id="del1" style="margin: 0px 0px 0px 20px;" onClick="deleteGun(\''+id+'\')" class="btn btn-light">Delete</button>'+
+                                    '</span>'+
+                                    '<h3>' + desc + '</h6>'+
+                                    '<p><span class="glyphicon glyphicon-user"></span> ' + owner + '</p>'+
+                                    '<hr>'+
+                                    '<p><b>Gun 1</b></p>'+ 
+                                    '<p><span class="badge badge-secondary">' + tabs.join(" | ") + '</span></p>'+
+                                    '<button type="button" id="fire1" onClick="fireGun(\''+id+'\')" class="btn btn-danger">Fire</button>'+ " " +
+                                    '<hr>'+
+                                    '<p><b>Gun 2</b></p>'+
+                                    '<p><span class="badge badge-secondary">' + secondTabs.join(" | ") + '</span></p>'+
+                                    '<span id="spanWrapper2" style="display: flex;">'+
+                                        '<button type="button" id="fire2" onClick="fireGun2(\''+id+'\')" class="btn btn-danger">Fire</button>'+ " " +
+                                        '<p id="notDefined" style="margin: 0px 0px 0px 0px;"></p>'+
+                                    '</span'
+                                '</div>';   
+        }else{
+            gunList.innerHTML += '<div class="well">'+
+                                    '<span id="spanWrapper" style="display: flex;">'+
+                                        '<h6> Gun Id: ' + id + '</h6>'+
+                                        '<button type="button" id="del1" style="margin: 0px 0px 0px 20px;" onClick="deleteGun(\''+id+'\')" class="btn btn-light">Delete</button>'+
+                                    '</span>'+
+                                    '<h3>' + desc + '</h6>'+
+                                    '<p><span class="glyphicon glyphicon-user"></span> ' + owner + '</p>'+
+                                    '<hr>'+
+                                    '<p><b>Gun 1</b></p>'+ 
+                                    '<p><span class="badge badge-secondary">' + tabs.join(" | ") + '</span></p>'+
+                                    '<button type="button" id="fire1" onClick="fireGun(\''+id+'\')" class="btn btn-danger">Fire</button>'+ " " +
+                                '</div>';   
+        }
     }
-}
-
-function openWindowSecondMonitor(url, winName, xOffset, yOffset) {
-    var x = (window.screenX || window.screenLeft || 0) + (xOffset || 0);
-    var y = (window.screenY || window.screenTop || 0) + (yOffset || 0);
-    return window.open(url, winName, "toolbar=yes,personalbar=yes,scrollbars=yes,resizable=yes,top="+y+",left="+x+",width=1200,height=1000");
 }
 
 function fireGun(id){
@@ -165,10 +287,22 @@ function fireGun(id){
             guns[i].gunTabs.forEach(function(element){
                 console.log("this guns URLs " + element);
                 window.open("http://" + element, "_blank");
-                openWindowSecondMonitor("http://www.google.com", "Second Gun", 4000, 600);
-                //seems to work but need to check new window parameters for google chrome as the current ones
-                //do not seem to work
-            });
+            });      
+        }
+    }
+}
+
+function fireGun2(id){
+    //opening tabs trigger
+    var guns = JSON.parse(localStorage.getItem("guns"));
+    for(var i = 0; i < guns.length; i++){
+        console.log("fired 22 " + guns[i].gunIds + " has " + id);
+        if(guns[i].gunIds == id){
+            console.log("fired 33");
+            guns[i].gunTabs2.forEach(function(element){
+                console.log("this guns URLs " + element);
+                window.open("http://" + element, "_blank");
+            });      
         }
     }
 }
@@ -185,29 +319,3 @@ function deleteGun(id){
     localStorage.setItem("guns", JSON.stringify(guns));
     fetchGuns();
 }
-
-//Below its just example//
-// function fetchTrackers(){
-//     //We would use the browser local storage.
-//     var trackers = JSON.parse(localStorage.getItem("trackers"));
-//     var trackersList = document.getElementById("trackersList");
-
-//     trackersList.innerHTML = "";
-
-//     for (var i = 0; i < trackers.length;i++){
-//         var id = trackers[i].id;
-//         var desc = trackers[i].description;
-//         var severity = trackers[i].severity;
-//         var assignedTo = trackers[i].assignedTo;
-//         var status = trackers[i].status;
-
-//         trackersList.innerHTML += '<div class="well">'+
-//                                     '<h6> Tracker ID: ' + id + '</h6>'+
-//                                     '<p><span class="badge badge-secondary">' + status + '</span></p>'+
-//                                     '<h3>' + desc + '</h3>'+
-//                                     '<p><span class="glyphicon glyphicon-time"></span> ' + severity + '</p>'+
-//                                     '<p><span class="glyphicon glyphicon-user"></span> ' + assignedTo + '</p>'+
-//                                     '<a href="#" onClick="setStatusClosed(\''+id+'\')" class="btn btn-warning">Close</a>'+ " " +
-//                                     '<a href="#" onClick="deleteTracker(\''+id+'\')" class="btn btn-danger">Delete</a>'+
-//                                  '</div>';   
-//     }

@@ -5,3 +5,14 @@
 h2 {
     text-align: center;
 }
+
+#jumbo {
+    /* background: url('http://placekitten.com/800/500') no-repeat center center;
+    background-size: cover; */
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  #gunsRow {
+      margin: 0 auto;
+  }
